@@ -1,0 +1,31 @@
+<section class="example-section" *ngIf="breed || subBreed">
+  <mat-radio-group
+    aria-label="Select an option"
+    [value]="'true'"
+    (change)="onImageDisplayTypeChange($event)"
+  >
+    <mat-radio-button value="true">Show All Images</mat-radio-button>
+    <mat-radio-button value="false">Show Random Images</mat-radio-button>
+  </mat-radio-group>
+</section>
+<div class="container" *ngIf="!showAllImage">
+  <label for="numOfImageInput">Select number of Random Image to display </label>
+  <input
+    id="numOfImageInput"
+    type="number"
+    [(ngModel)]="randomImgCount"
+    min="1"
+    max="50"
+    [disabled]="showAllImage"
+  />
+  <p *ngIf="showError">Please enter a number between 1 and 50.</p>
+  <button [disabled]="showAllImage" (click)="changeRandomImageDisplayCount()">
+    Load
+  </button>
+</div>
+
+<ng-container *ngIf="imageList$ | async as imageUrls">
+  <ng-container *ngFor="let imageUrl of imageUrls; trackBy: trackByImageUrl">
+    <img [src]="imageUrl" alt="dog-image" />
+  </ng-container>
+</ng-container>

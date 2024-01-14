@@ -1,0 +1,20 @@
+<form class="example-form">
+  <mat-form-field class="example-full-width">
+    <mat-label>Breed</mat-label>
+    <input
+      type="text"
+      placeholder="Pick one"
+      aria-label="Breed"
+      matInput
+      [formControl]="breedSearchControl"
+      [matAutocomplete]="auto"
+    />
+    <mat-autocomplete
+      autoActiveFirstOption
+      #auto="matAutocomplete"
+      (optionSelected)="onOptionSelected($event)"
+    >
+      <mat-option *ngFor="let breed of breedList; trackBy:trackByBreed " [value]="breed">{{ breed }}</mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+</form>

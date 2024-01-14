@@ -1,0 +1,6 @@
+<ng-container *ngIf="breedList$ | async as breedList">
+  <breed-search [breedList]="breedList" [preSelectedValue]="selectedBreedName" (selectedBreedEmitter)="onBreedSelection($event)"></breed-search>
+  <random-image [breed]="selectedBreedName"></random-image>
+</ng-container>
+
+

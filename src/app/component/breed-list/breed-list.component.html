@@ -1,0 +1,5 @@
+
+  <ul *ngIf="formattedBreedList$ | async as dogBreedList">
+    <li *ngFor = "let dogBreed of dogBreedList; trackBy: trackByBreed"><a [routerLink]="['/browse-breed']" [queryParams]="{'breed': dogBreed}">{{dogBreed}}</a></li>
+  </ul>
+
