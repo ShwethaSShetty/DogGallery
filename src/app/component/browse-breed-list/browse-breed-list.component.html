@@ -1,8 +1,14 @@
+<div>
+  <h3>Browse Breed</h3>
+  <div *ngIf="formattedDogBreedList$ | async as breedList">
+    <breed-search
+      [preSelectedValue]="selectedBreed"
+      [breedList]="breedList"
+      (selectedBreedEmitter)="onBreedSelection($event)"
+    ></breed-search>
+  </div>
 
-<div *ngIf="formattedDogBreedList$ | async as breedList">
-  <breed-search [preSelectedValue]="selectedBreed" [breedList]="breedList" (selectedBreedEmitter)="onBreedSelection($event)"></breed-search>
+  <div class="img-container" *ngIf="dogImage$ | async as imageUrl">
+    <img [src]="imageUrl" alt="dog-image" />
+  </div>
 </div>
-
-<ng-container  *ngIf="dogImage$ | async as imageUrl">
-<img [src]="imageUrl" alt="dog-image" />
-</ng-container>

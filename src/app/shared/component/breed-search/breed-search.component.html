@@ -1,6 +1,6 @@
 <form class="example-form">
   <mat-form-field class="example-full-width">
-    <mat-label>Breed</mat-label>
+    <mat-label>{{fieldTitle}}</mat-label>
     <input
       type="text"
       placeholder="Pick one"
@@ -14,7 +14,7 @@
       #auto="matAutocomplete"
       (optionSelected)="onOptionSelected($event)"
     >
-      <mat-option *ngFor="let breed of breedList; trackBy:trackByBreed " [value]="breed">{{ breed }}</mat-option>
+      <mat-option *ngFor="let breed of filteredOptions$|async; trackBy:trackByBreed " [value]="breed">{{ breed }}</mat-option>
     </mat-autocomplete>
   </mat-form-field>
 </form>

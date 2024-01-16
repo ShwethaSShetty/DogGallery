@@ -18,14 +18,14 @@
     max="50"
     [disabled]="showAllImage"
   />
-  <p *ngIf="showError">Please enter a number between 1 and 50.</p>
-  <button [disabled]="showAllImage" (click)="changeRandomImageDisplayCount()">
+  <button class="load-button" mat-raised-button color="primary" [disabled]="showAllImage" (click)="changeRandomImageDisplayCount()">
     Load
   </button>
 </div>
+<p class="error-message" *ngIf="showError">Please enter a number between 1 and 50.</p>
 
-<ng-container *ngIf="imageList$ | async as imageUrls">
-  <ng-container *ngFor="let imageUrl of imageUrls; trackBy: trackByImageUrl">
+<div class="random-image-container" *ngIf="imageList$ | async as imageUrls">
+  <div class="random-image-item" *ngFor="let imageUrl of imageUrls; trackBy: trackByImageUrl">
     <img [src]="imageUrl" alt="dog-image" />
-  </ng-container>
-</ng-container>
+  </div>
+</div>

@@ -1,9 +1,10 @@
 import { AsyncPipe, CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { EMPTY, Observable, catchError, debounceTime, distinctUntilChanged, map, startWith } from 'rxjs';
 
 @Component({
   selector: 'breed-search',
@@ -18,14 +19,15 @@ import { MatInputModule } from '@angular/material/input';
   ],
   templateUrl: './breed-search.component.html',
   styleUrl: './breed-search.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BreedSearchComponent {
   breedSearchControl = new FormControl('');
-  @Input() breedList: any = [];
-  @Output() selectedBreedEmitter = new EventEmitter<string>();
+  filteredOptions$!: Observable<string[]>;
+  @Input() breedList: string[] = [];
+  @Input() fieldTitle: string = 'Breed';
 
   private _preSelectedValue!: string;
-
   @Input()
   set preSelectedValue(value: string) {
     this._preSelectedValue = value;
@@ -34,6 +36,24 @@ export class BreedSearchComponent {
 
   get preSelectedValue(): string {
     return this._preSelectedValue;
+  }
+
+  @Output() selectedBreedEmitter = new EventEmitter<string>();
+
+  ngOnInit() {
+    this.filteredOptions$ = this.breedSearchControl.valueChanges.pipe(
+      startWith(''),
+      debounceTime(100),
+      distinctUntilChanged(),
+      map(value => this._filter(value || '')),
+      catchError(()=> EMPTY)
+    );
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.breedList.filter(option => option.toLowerCase().includes(filterValue));
   }
 
   public onOptionSelected(event: any): void {

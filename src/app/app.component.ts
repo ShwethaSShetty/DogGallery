@@ -6,6 +6,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 
+const IMAGE_ICON_URL = '../assets/images/dog-icon.svg';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -16,11 +17,12 @@ import { MatIconModule } from '@angular/material/icon';
     MatListModule,
     MatToolbarModule,
     MatIconModule,
-    RouterLink
+    RouterLink,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  title = 'dog-breed';
+  title = 'Dog Gallery';
+  imageUrl = IMAGE_ICON_URL;
 }

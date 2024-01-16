@@ -1,0 +1,10 @@
+.img-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    img {
+      max-width: 100%; /* Ensure the image does not exceed the container width */
+      max-height: 100%; /* Ensure the image does not exceed the container height */
+    }
+}

@@ -1,7 +1,7 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RandomImageComponent } from '../../shared/component/random-image/random-image.component';
-import { Observable, map, tap } from 'rxjs';
-import { DogBreedServiceService } from '../../service/dog-breed.service.ts.service';
+import { EMPTY, Observable, catchError, map, tap } from 'rxjs';
+import { DogBreedServiceService } from '../../service/dog-breed.service';
 import { BreedSearchComponent } from '../../shared/component/breed-search/breed-search.component';
 import { CommonModule } from '@angular/common';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -19,6 +19,7 @@ import { FormsModule } from '@angular/forms';
   ],
   templateUrl: './by-breed.component.html',
   styleUrl: './by-breed.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ByBreedComponent {
   selectedBreedName!: string;
@@ -38,7 +39,8 @@ export class ByBreedComponent {
   public getBreedList(): void{
     this.breedList$ = this.dogBreedService.getBreedList().pipe(
       map((breedListResp) =>  Object.keys(breedListResp.message)),
-      tap((breedList)=> this.selectedBreedName = this.selectedBreedName || breedList[0] )
+      tap((breedList)=> this.selectedBreedName = this.selectedBreedName || breedList[0] ),
+      catchError(()=>EMPTY)
     );
   }
 

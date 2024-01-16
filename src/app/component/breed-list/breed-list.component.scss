@@ -1,0 +1,31 @@
+/* Add styles for the breed list */
+.breed-list {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  .breed-list-item{
+    width: 50%;
+  }
+}
+
+/* Style each breed link */
+.breed-link {
+  text-decoration: none;
+  color: #333;
+  display: block;
+  padding: 10px;
+  margin: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  transition: background-color 0.3s ease;
+  flex: 0 0 calc(50% - 20px); /* Set width for two columns with margins */
+  box-sizing: border-box; /* Include padding and border in the width */
+
+}
+
+/* Hover effect for breed links */
+.breed-link:hover {
+  background-color: #e0e0e0;
+}

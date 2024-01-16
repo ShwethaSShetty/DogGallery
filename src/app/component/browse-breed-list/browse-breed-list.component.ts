@@ -1,6 +1,13 @@
-import { Component, inject } from '@angular/core';
-import { Observable, map, mergeMap, switchMap, tap } from 'rxjs';
-import { DogBreedServiceService } from '../../service/dog-breed.service.ts.service';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+  EMPTY,
+  Observable,
+  catchError,
+  map,
+  switchMap,
+  tap,
+} from 'rxjs';
+import { DogBreedServiceService } from '../../service/dog-breed.service';
 import { CommonModule } from '@angular/common';
 import { BreedSearchComponent } from '../../shared/component/breed-search/breed-search.component';
 import { ActivatedRoute } from '@angular/router';
@@ -12,10 +19,11 @@ import { formatBreedList } from '../../shared/utils/breed-util';
   imports: [CommonModule, BreedSearchComponent],
   templateUrl: './browse-breed-list.component.html',
   styleUrl: './browse-breed-list.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BrowseBreedListComponent {
   formattedDogBreedList$!: Observable<string[]>;
-  dogImage$!: Observable<string | undefined>;
+  dogImage$!: Observable<string | string[]>;
   selectedBreed!: string;
 
   private dogBreedService = inject(DogBreedServiceService);
@@ -31,16 +39,18 @@ export class BrowseBreedListComponent {
       tap((formattedList) => {
         this.selectedBreed = this.selectedBreed || formattedList[0];
         this.getBreedImage();
-      })
+      }),
+      catchError(() => EMPTY)
     );
   }
 
   public getBreedImage(): void {
     const [breedName, subBreedName] = this.selectedBreed.split(' ').reverse();
     const partialUrl = breedName + (subBreedName ? '/' + subBreedName : '');
-    this.dogImage$ = this.dogBreedService
-      .getRandomDogImage(1, partialUrl)
-      .pipe(map((breedRes) => breedRes.message));
+    this.dogImage$ = this.dogBreedService.getRandomDogImage(1, partialUrl).pipe(
+      map((breedRes) => breedRes.message),
+      catchError(() => EMPTY)
+    );
   }
 
   public onBreedSelection(value: string): void {

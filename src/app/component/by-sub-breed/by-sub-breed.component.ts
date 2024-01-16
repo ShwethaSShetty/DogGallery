@@ -1,7 +1,20 @@
-import { Component, OnInit, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  inject,
+} from '@angular/core';
 import { RandomImageComponent } from '../../shared/component/random-image/random-image.component';
-import { Observable, filter, map, switchMap, tap } from 'rxjs';
-import { DogBreedServiceService } from '../../service/dog-breed.service.ts.service';
+import {
+  EMPTY,
+  Observable,
+  catchError,
+  filter,
+  map,
+  switchMap,
+  tap,
+} from 'rxjs';
+import { DogBreedServiceService } from '../../service/dog-breed.service';
 import { CommonModule } from '@angular/common';
 import { BreedSearchComponent } from '../../shared/component/breed-search/breed-search.component';
 
@@ -11,11 +24,12 @@ import { BreedSearchComponent } from '../../shared/component/breed-search/breed-
   imports: [RandomImageComponent, CommonModule, BreedSearchComponent],
   templateUrl: './by-sub-breed.component.html',
   styleUrl: './by-sub-breed.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BySubBreedComponent implements OnInit {
   breedName!: string;
   subBreedName!: string;
-
+  subBreedFieldTitle: string = 'Sub Breed';
   subBreedList$!: Observable<string[]>;
   breedList: string[] = [];
 
@@ -38,7 +52,8 @@ export class BySubBreedComponent implements OnInit {
         this.breedList = breedList;
         this.breedName = this.breedName || breedList[0];
       }),
-      switchMap(() => this.getSubBreedList())
+      switchMap(() => this.getSubBreedList()),
+      catchError(() => EMPTY)
     );
   }
 
@@ -47,7 +62,8 @@ export class BySubBreedComponent implements OnInit {
       map((subBreedList) => {
         this.subBreedName = subBreedList.message[0];
         return subBreedList.message;
-      })
+      }),
+      catchError(() => EMPTY)
     );
   }
 

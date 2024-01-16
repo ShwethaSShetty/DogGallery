@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   Input,
   OnChanges,
@@ -6,12 +7,14 @@ import {
   SimpleChanges,
   inject,
 } from '@angular/core';
-import { DogBreedServiceService } from '../../../service/dog-breed.service.ts.service';
-import { Observable, map } from 'rxjs';
+import { DogBreedServiceService } from '../../../service/dog-breed.service';
+import { EMPTY, Observable, catchError, map } from 'rxjs';
 import { CommonModule, NgFor } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioChange, MatRadioModule } from '@angular/material/radio';
+import {MatButtonModule} from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
   selector: 'random-image',
@@ -22,9 +25,12 @@ import { MatRadioChange, MatRadioModule } from '@angular/material/radio';
     FormsModule,
     MatCheckboxModule,
     MatRadioModule,
+    MatButtonModule,
+    MatFormFieldModule
   ],
   templateUrl: './random-image.component.html',
   styleUrl: './random-image.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RandomImageComponent implements OnInit, OnChanges {
   @Input() breed!: string;
@@ -82,23 +88,25 @@ export class RandomImageComponent implements OnInit, OnChanges {
     }
   }
 
-  private loadRandomImages(imageCount: number = 1): void {
+  public loadRandomImages(imageCount: number = 1): void {
     this.imageList$ = this.dogBreedService
       .getRandomDogImage(imageCount, this.imageUrl)
       .pipe(
         map((res) =>
-          Array.isArray(res?.message) ? res?.message : res?.message.split()
-        )
+          Array.isArray(res?.message) ? res?.message : [res.message]
+        ),
+        catchError(()=> EMPTY)
       );
   }
 
-  private getAllImages(): void {
+  public getAllImages(): void {
     this.imageList$ = this.dogBreedService
       .getDogImagesByBreed(this.imageUrl)
       .pipe(
         map((res) =>
-          Array.isArray(res?.message) ? res?.message : res?.message.split()
-        )
+          Array.isArray(res?.message) ? res?.message :  [res.message]
+        ),
+        catchError(()=> EMPTY)
       );
   }
 }
