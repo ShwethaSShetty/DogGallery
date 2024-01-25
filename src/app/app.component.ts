@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -25,4 +25,19 @@ const IMAGE_ICON_URL = '../assets/images/dog-icon.svg';
 export class AppComponent {
   title = 'Dog Gallery';
   imageUrl = IMAGE_ICON_URL;
+  @ViewChild('sidenav') sideNav!: MatSidenav
+  private router= inject(Router);
+
+  navigateTo(path: string): void{
+    this.router.navigate([path]);
+    this.closeSideNav();
+  }
+
+  closeSideNav(): void{
+    this.sideNav.close();
+  }
+
+  toggleSideNav(): void{
+    this.sideNav.toggle();
+  }
 }

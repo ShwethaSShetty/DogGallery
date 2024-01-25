@@ -16,7 +16,7 @@ import { MatInputModule } from '@angular/material/input';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BreedListComponent implements OnInit {
-  formattedBreedList$!: Observable<string[]>;
+  formattedBreedList$ : Observable<string[]> = new Observable<string[]>;
   allBreeds!: string[];
 
   private dogBreedService = inject(DogBreedServiceService);
@@ -26,7 +26,7 @@ export class BreedListComponent implements OnInit {
       .getBreedList()
       .pipe(map((breedListRes) => formatBreedList(breedListRes)),
       tap((breedList)=> this.allBreeds = breedList),
-      catchError((err)=> EMPTY));
+      catchError(()=> EMPTY));
   }
   public filterBreeds(event:any): void {
     const filterValue = event.target.value;

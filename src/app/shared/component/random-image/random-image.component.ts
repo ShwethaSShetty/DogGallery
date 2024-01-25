@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { DogBreedServiceService } from '../../../service/dog-breed.service';
 import { EMPTY, Observable, catchError, map } from 'rxjs';
-import { CommonModule, NgFor } from '@angular/common';
+import { CommonModule, NgFor, NgOptimizedImage } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioChange, MatRadioModule } from '@angular/material/radio';
@@ -26,7 +26,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatCheckboxModule,
     MatRadioModule,
     MatButtonModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    NgOptimizedImage
   ],
   templateUrl: './random-image.component.html',
   styleUrl: './random-image.component.scss',

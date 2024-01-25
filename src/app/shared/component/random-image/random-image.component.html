@@ -26,6 +26,6 @@
 
 <div class="random-image-container" *ngIf="imageList$ | async as imageUrls">
   <div class="random-image-item" *ngFor="let imageUrl of imageUrls; trackBy: trackByImageUrl">
-    <img [src]="imageUrl" alt="dog-image" />
+    <img [ngSrc]="imageUrl" alt="dog-image" width="200" height="200"/>
   </div>
 </div>

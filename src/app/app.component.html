@@ -2,17 +2,17 @@
   <!--Side Nav-->
   <mat-sidenav #sidenav class="sidenav" fixedInViewport="true" [opened]="false">
     <mat-nav-list>
-      <a mat-list-item routerLink="/list" (click)="sidenav.close()">Breed List</a>
-      <a mat-list-item routerLink="/random-image" (click)="sidenav.close()">Random Image</a>
-      <a mat-list-item routerLink="/by-breed" (click)="sidenav.close()">By Breed</a>
-      <a mat-list-item routerLink="/by-subBreed" (click)="sidenav.close()">By SubBreed</a>
-      <a mat-list-item routerLink="/browse-breed" (click)="sidenav.close()">Browse Breed</a>
+      <a mat-list-item (click)="navigateTo('/list')">Breed List</a>
+      <a mat-list-item (click)="navigateTo('/random-image')">Random Image</a>
+      <a mat-list-item (click)="navigateTo('/by-breed')">By Breed</a>
+      <a mat-list-item (click)="navigateTo('/by-subBreed')">By SubBreed</a>
+      <a mat-list-item (click)="navigateTo('/browse-breed')">Browse Breed</a>
     </mat-nav-list>
   </mat-sidenav>
 
   <mat-sidenav-content class="content">
     <mat-toolbar color="primary" class="header-toolbar">
-      <button mat-icon-button (click)="sidenav.toggle()">
+      <button aria-label="menu" class="menu-icon" mat-icon-button (click)="toggleSideNav()">
         <mat-icon>menu</mat-icon>
       </button>
       <div class="header-content">

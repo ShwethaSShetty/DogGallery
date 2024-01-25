@@ -8,7 +8,7 @@ import {
   tap,
 } from 'rxjs';
 import { DogBreedServiceService } from '../../service/dog-breed.service';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { BreedSearchComponent } from '../../shared/component/breed-search/breed-search.component';
 import { ActivatedRoute } from '@angular/router';
 import { formatBreedList } from '../../shared/utils/breed-util';
@@ -16,7 +16,7 @@ import { formatBreedList } from '../../shared/utils/breed-util';
 @Component({
   selector: 'app-browse-breed-list',
   standalone: true,
-  imports: [CommonModule, BreedSearchComponent],
+  imports: [CommonModule, BreedSearchComponent, NgOptimizedImage],
   templateUrl: './browse-breed-list.component.html',
   styleUrl: './browse-breed-list.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
