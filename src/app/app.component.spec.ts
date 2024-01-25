@@ -52,7 +52,7 @@ describe('AppComponent', () => {
   it(`should call toggle side nav on click of menu button`,async() => {
     // Arrange
     const sideMenuButton = el.queryAll(By.css('.menu-icon'))[0];
-    spyOn(component,'toggleSideNav');
+    spyOn(component,'toggleSideNav').and.callThrough();
     // Act
     sideMenuButton.nativeElement.click();
     fixture.detectChanges();
@@ -63,7 +63,7 @@ describe('AppComponent', () => {
 
   it(`should navigate to route on click of menu item`,async() => {
     const link = el.queryAll(By.css('a'))[1];
-    spyOn(component,'closeSideNav');
+    spyOn(component,'closeSideNav').and.callThrough();
 
     link.nativeElement.click();
     fixture.detectChanges();

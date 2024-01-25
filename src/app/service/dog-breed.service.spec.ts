@@ -1,8 +1,9 @@
 
 import { TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { DogBreedServiceService } from './dog-breed.service';
 import { BreedsListResponse, MultipleImagesResponse, SingleImageResponse, SubBreedsListResponse } from '../shared/types/breed-types';
+import { provideHttpClient } from '@angular/common/http';
 
 describe('DogBreedServiceTsService', () => {
   let service: DogBreedServiceService;
@@ -10,8 +11,10 @@ describe('DogBreedServiceTsService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [ HttpClientTestingModule ],
-      providers: [ DogBreedServiceService ]
+      providers: [
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        DogBreedServiceService ]
     });
     service = TestBed.inject(DogBreedServiceService);
     httpMock = TestBed.inject(HttpTestingController);

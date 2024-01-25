@@ -14,7 +14,7 @@
       #auto="matAutocomplete"
       (optionSelected)="onOptionSelected($event)"
     >
-      <mat-option *ngFor="let breed of filteredOptions$|async; trackBy:trackByBreed " [value]="breed">{{ breed }}</mat-option>
+      <mat-option class="breed-option" *ngFor="let breed of filteredOptions$|async; trackBy:trackByBreed " [value]="breed">{{ breed }}</mat-option>
     </mat-autocomplete>
   </mat-form-field>
 </form>

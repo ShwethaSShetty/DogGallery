@@ -52,8 +52,11 @@ export class BreedSearchComponent {
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
+    console.log("ts file value---"+filterValue);
 
-    return this.breedList.filter(option => option.toLowerCase().includes(filterValue));
+    const filteredList = this.breedList.filter(option => option.toLowerCase().includes(filterValue));
+    console.log("ts file---"+filteredList);
+    return filteredList;
   }
 
   public onOptionSelected(event: any): void {

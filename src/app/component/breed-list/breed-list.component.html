@@ -2,10 +2,11 @@
   <h3>Breed List</h3>
   <mat-form-field>
     <mat-label>Search</mat-label>
-    <input matInput placeholder="Filter Breeds" (input)="filterBreeds($event)">
+    <input #input matInput placeholder="Filter Breeds">
   </mat-form-field>
   <ul class="breed-list" *ngIf="formattedBreedList$ | async as dogBreedList">
     <li class="breed-list-item" *ngFor = "let dogBreed of dogBreedList; trackBy: trackByBreed"><a class="breed-link" [routerLink]="['/browse-breed']" [queryParams]="{'breed': dogBreed}">{{dogBreed}}</a></li>
+    <li *ngIf="dogBreedList.length==0"> Breed Not Found</li>
   </ul>
 </div>
 

@@ -32,7 +32,7 @@ describe('RandomImageComponent', () => {
     fixture = TestBed.createComponent(RandomImageComponent);
     component = fixture.componentInstance;
 
-    mockDogBreedServiceService.getRandomDogImage.and.callFake((count, url) => of({'message': Array(count).fill('url'), 'status': 'success'}));
+    mockDogBreedServiceService.getRandomDogImage.and.callFake((count, url) => of({'message': Array(count).fill(url), 'status': 'success'}));
 
     mockDogBreedServiceService.getDogImagesByBreed.and.callFake((url) => of({'message': url, 'status': 'success'}));
 

@@ -34,10 +34,8 @@ describe('BrowseBreedListComponent', () => {
 
     fixture = TestBed.createComponent(BrowseBreedListComponent);
     component = fixture.componentInstance;
-
     mockDogBreedServiceService.getBreedList.and.returnValue(of({status: 'success', message: {"akita": []}}));
     mockDogBreedServiceService.getRandomDogImage.and.returnValue(of({status: 'success', message: 'https://images.dog.ceo/breeds/akita/akita1.jpg'}));
-
     fixture.detectChanges();
   });
 
