@@ -54,7 +54,6 @@ export class BreedSearchComponent {
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
-
     const filteredList = this.breedList.filter(option => option.toLowerCase().includes(filterValue));
     return filteredList;
   }
