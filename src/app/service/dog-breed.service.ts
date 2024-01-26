@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable, shareReplay } from 'rxjs';
+import { Observable, of, shareReplay, tap } from 'rxjs';
 import {
   BreedsListResponse,
   MultipleImagesResponse,
@@ -17,9 +17,7 @@ const BREED_URL = `${BASE_URL}breed/`;
 })
 export class DogBreedServiceService {
   private dogBreedListCache$: Observable<BreedsListResponse> | null = null;
-  private dogSubBreedListCache$: {
-    [key: string]: Observable<SubBreedsListResponse>;
-  } = {};
+  private dogSubBreedListCache = new Map<string,SubBreedsListResponse>();
 
   private http = inject(HttpClient);
 
@@ -33,13 +31,17 @@ export class DogBreedServiceService {
   }
 
   public getSubBreedList(breed: string): Observable<SubBreedsListResponse> {
-    if (!this.dogSubBreedListCache$[breed]) {
-      this.dogSubBreedListCache$[breed] = this.http
-        .get<SubBreedsListResponse>(`${BREED_URL}${breed}/list`)
-        .pipe(shareReplay(1));
+    let subBreedResponse : Observable<SubBreedsListResponse>;
+    if (this.dogSubBreedListCache.has(breed)) {
+       subBreedResponse = of(this.dogSubBreedListCache.get(breed)!);
+    }else{
+      subBreedResponse = this.http
+      .get<SubBreedsListResponse>(`${BREED_URL}${breed}/list`)
+      .pipe(tap(response=> this.dogSubBreedListCache.set(breed,response)),
+      shareReplay(1))
     }
 
-    return this.dogSubBreedListCache$[breed];
+    return subBreedResponse;
   }
 
   public getRandomDogImage(

@@ -4,7 +4,7 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { EMPTY, Observable, catchError, debounceTime, distinctUntilChanged, map, startWith } from 'rxjs';
+import { EMPTY, Observable, catchError, debounceTime, distinctUntilChanged, map, of, startWith } from 'rxjs';
 
 @Component({
   selector: 'breed-search',
@@ -24,6 +24,8 @@ import { EMPTY, Observable, catchError, debounceTime, distinctUntilChanged, map,
 export class BreedSearchComponent {
   breedSearchControl = new FormControl('');
   filteredOptions$!: Observable<string[]>;
+  selectedMatOption: string = '';
+
   @Input() breedList: string[] = [];
   @Input() fieldTitle: string = 'Breed';
 
@@ -52,10 +54,8 @@ export class BreedSearchComponent {
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
-    console.log("ts file value---"+filterValue);
 
     const filteredList = this.breedList.filter(option => option.toLowerCase().includes(filterValue));
-    console.log("ts file---"+filteredList);
     return filteredList;
   }
 
